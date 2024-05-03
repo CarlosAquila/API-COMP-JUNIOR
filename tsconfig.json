@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+      "sourceMap": true, // significa que vai gerar um arquivo de mapeamento para o código fonte
+      "outDir": "dist", // significa que o código transpilado será gerado na pasta dist
+      "strict": true, // significa que o TypeScript vai ser mais rigoroso com o código
+      "lib": ["ESNext"], // significa que o TypeScript vai usar as funcionalidades mais recentes do JavaScript
+      "esModuleInterop": true // significa que o TypeScript vai usar o sistema de módulos do ES6
+  }
+}
