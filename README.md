@@ -15,6 +15,8 @@ npx prisma migrate dev --name init
 
 npm install --save-dev typescript
 
+npm install --save-dev ts-node-dev
+
 tscongif.json
 {
   "compilerOptions": {
