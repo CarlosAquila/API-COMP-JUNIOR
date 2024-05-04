@@ -131,3 +131,6 @@ dist
 
 #Migrations
 migrations/
+
+#md
+STUDY.md
