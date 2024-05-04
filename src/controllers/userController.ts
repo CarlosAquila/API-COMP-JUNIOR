@@ -47,4 +47,48 @@ export class UserController {
     }
   }
 
+  async getUserByEmail(req: Request, res: Response) {
+    try {
+      const { email } = req.params;
+      const user = await userService.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async updateUserById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const userData: UserDTO = new UserDTO(req.body);
+      const updatedUser = await userService.updateUserById(id, userData);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async deleteUserById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await userService.deleteUserById(id);
+      return res.status(204).send();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+
 }

@@ -29,4 +29,28 @@ export class UserService {
     }
   }
 
+  async getUserByEmail(email: string) {
+    try {
+      return userModel.getUserByEmail(email);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async updateUserById(id: string, data: UserDTO) {
+    try {
+      return userModel.updateUserById(id, data);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async deleteUserById(id: string) {
+    try {
+      return userModel.deleteUserById(id);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
 }
