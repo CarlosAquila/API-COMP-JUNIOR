@@ -6,7 +6,7 @@ interface UserDTO {
 }
 
 class UserDTO {
-    constructor(data: any) {
+    constructor(data: UserDTO) {
         this.name = this.validateName(data.name);
         this.email = this.validateEmail(data.email);
         this.password = this.validatePassword(data.password);
