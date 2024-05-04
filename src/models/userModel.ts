@@ -25,4 +25,40 @@ export class UserModel {
     }
   }
 
+  async getUsers() {
+    try {
+      return await prisma.user.findMany({
+        where: {
+          visible: true
+        },
+        orderBy: {
+          email: 'asc'
+        },
+        include: {
+          loans: {}
+        }
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async getUserById(id: string) {
+    try {
+      return await prisma.user.findUnique({
+        where: {
+          id,
+          visible: true
+        },
+        include: {
+          loans: {}
+        }
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+
+
 }

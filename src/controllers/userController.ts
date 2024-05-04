@@ -19,4 +19,32 @@ export class UserController {
     }
   }
 
+  async getUsers(req: Request, res: Response) {
+    try {
+      const users = await userService.getUsers();
+      return res.status(200).json(users);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async getUserById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
 }
