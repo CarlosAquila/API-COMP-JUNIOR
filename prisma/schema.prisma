@@ -15,11 +15,90 @@ datasource db {
 
 model User {
   id            String   @id @default(uuid())
-  username      String   @unique
+  email         String   @unique
   name          String?
+  address      String?
   password      String
-  visivel       Boolean  @default(true)
+  loans         Loan[]
+  visible       Boolean  @default(true)
   createdAt     DateTime @default(now())
 
   @@map("users")
+}
+
+model Author {
+  id            String   @id @default(uuid())
+  name          String
+  biography     String?
+  books         Book[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("authors")
+}
+
+model Publisher {
+  id            String   @id @default(uuid())
+  name          String
+  address       String?
+  books         Book[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("publishers")
+}
+
+model Category {
+  id            String   @id @default(uuid())
+  name          String
+  books         Book[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("categories")
+}
+
+model Employee {
+  id            String   @id @default(uuid())
+  name          String
+  cpf           String   @unique
+  telephone     String?
+  address       String?
+  loans         Loan[]
+  visible       Boolean  @default(true)
+  createdAt     DateTime @default(now())
+
+  @@map("employees")
+}
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  isbn          String  @unique
+  year          Int
+  publisherId   String
+  publisher     Publisher @relation(fields: [publisherId], references: [id])
+  authors       Author[]
+  categories    Category[]
+  loans         Loan[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("books")
+}
+
+model Loan {
+  id            String   @id @default(uuid())
+  loanDate      DateTime @default(now())
+  returnDate    DateTime?
+  userId        String
+  user          User @relation(fields: [userId], references: [id])
+  bookId        String
+  book          Book @relation(fields: [bookId], references: [id])
+  employeeId    String
+  employee      Employee @relation(fields: [employeeId], references: [id])
+  visible       Boolean  @default(true)
+
+  @@map("loans")
 }
