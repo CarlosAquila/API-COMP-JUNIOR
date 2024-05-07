@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 
 export class UserModel {
-  
+
   async createUser(data: UserDTO) {
     try {
       return await prisma.user.create({
@@ -61,7 +61,7 @@ export class UserModel {
 
   async getUserByEmail(email: string) {
     try {
-      return await prisma.user.findUnique({
+      return await prisma.user.findMany({
         where: {
           email,
           visible: true
