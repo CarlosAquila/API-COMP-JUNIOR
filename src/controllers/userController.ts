@@ -22,6 +22,11 @@ export class UserController {
   async getUsers(req: Request, res: Response) {
     try {
       const users = await userService.getUsers();
+
+      if (!users || (Array.isArray(users) && users.length === 0)) {
+        return res.status(404).json({ error: "users not found" });
+      }
+
       return res.status(200).json(users);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -51,7 +56,7 @@ export class UserController {
     try {
       const { email } = req.params;
       const user = await userService.getUserByEmail(email);
-      if (!user) {
+      if (!user || (Array.isArray(user) && user.length === 0)) {
         return res.status(404).json({ error: "User not found" });
       }
       return res.status(200).json(user);
