@@ -1,12 +1,14 @@
 import express from 'express';
 import { errorHandler } from './middlewares/serverMiddleware';
+import { routes } from './routes';
+
 const port = 3000;
 
 const app = express();
 
 app.use(express.json());
 
-// to do: add routes
+app.use(routes);
 
 app.use(errorHandler);
 
