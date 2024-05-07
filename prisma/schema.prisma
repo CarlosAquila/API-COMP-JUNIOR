@@ -51,6 +51,7 @@ model Publisher {
 model Category {
   id            String   @id @default(uuid())
   name          String
+  description   String?
   books         Book[]
   createdAt     DateTime @default(now())
   visible       Boolean  @default(true)
