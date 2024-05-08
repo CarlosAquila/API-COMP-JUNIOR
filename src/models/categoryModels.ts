@@ -104,6 +104,7 @@ export class CategoryModel {
       return await prisma.category.update({
         where: {
           id,
+          visible: true
         },
         data: {
           visible: false,

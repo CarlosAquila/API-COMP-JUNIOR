@@ -111,6 +111,7 @@ export class EmployeeModel {
       return await prisma.employee.update({
         where: {
           id,
+          visible: true,
         },
         data: {
           visible: false,
