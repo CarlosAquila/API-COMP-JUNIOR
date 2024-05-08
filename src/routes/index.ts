@@ -5,6 +5,7 @@ import { publisherRoutes } from "./publisher.routes";
 import { categoryRoutes } from "./category.routes";
 import { employeeRoutes } from "./employee.routes";
 import { bookRoutes } from "./book.routes"
+import { loanRoutes } from "./loan.routes"
  
 const routes = Router();
 
@@ -14,5 +15,6 @@ routes.use("/publishers", publisherRoutes);
 routes.use("/categories", categoryRoutes);
 routes.use("/employees", employeeRoutes);
 routes.use("/books", bookRoutes)
+routes.use("/loans", loanRoutes)
 
 export { routes };

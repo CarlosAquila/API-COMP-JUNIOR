@@ -92,7 +92,12 @@ model Book {
 model Loan {
   id            String   @id @default(uuid())
   loanDate      DateTime @default(now())
+  dueDate       DateTime
   returnDate    DateTime?
+  fees          Float    @default(0)
+  returned      Boolean  @default(false)
+  condition     String?
+  paymethod     String?
   userId        String
   user          User @relation(fields: [userId], references: [id])
   bookId        String
