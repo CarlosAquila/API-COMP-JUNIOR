@@ -35,6 +35,22 @@ export class BookService {
     }
   }
 
+  async getBooksByAuthor(authorId: string) {
+    try {
+      return bookModel.getBooksByAuthor(authorId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async getBooksByPublisher(publisherId: string) {
+    try {
+      return bookModel.getBooksByPublisher(publisherId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
   async updateBookById(id: string, data: BookDTO) {
     try {
       return bookModel.updateBookById(id, data);

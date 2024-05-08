@@ -66,6 +66,38 @@ export class BookController {
       }
     }
 
+    async getBooksByAuthor(req: Request, res: Response) {
+      try {
+        const { authorId } = req.params;
+        const books = await bookService.getBooksByAuthor(authorId);
+        if (!books || (Array.isArray(books) && books.length === 0)) {
+          return res.status(404).json({ error: "Books not found" });
+        }
+        return res.status(200).json(books);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return res.status(400).json({ error: error.message });
+        }
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    }
+
+    async getBooksByPublisher(req: Request, res: Response) {
+      try {
+        const { publisherId } = req.params;
+        const books = await bookService.getBooksByPublisher(publisherId);
+        if (!books || (Array.isArray(books) && books.length === 0)) {
+          return res.status(404).json({ error: "Books not found" });
+        }
+        return res.status(200).json(books);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return res.status(400).json({ error: error.message });
+        }
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    }
+
     async updateBookById(req: Request, res: Response) {
       try {
         const { id } = req.params;

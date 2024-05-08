@@ -95,6 +95,50 @@ export class BookModel {
     }
   }
 
+  async getBooksByPublisher(publisherId: string) {
+    try {
+      return await prisma.book.findMany({
+        where: {
+          publisherId,
+          visible: true,
+        },
+        include: {
+          publisher: {},
+          authors: {},
+          categories: {},
+          loans: {},
+        },
+      });
+    }
+    catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async getBooksByAuthor(authorId: string) {
+    try {
+      return await prisma.book.findMany({
+        where: {
+          authors: {
+            some: {
+              id: authorId,
+            },
+          },
+          visible: true,
+        },
+        include: {
+          publisher: {},
+          authors: {},
+          categories: {},
+          loans: {},
+        },
+      });
+    }
+    catch (error: unknown) {
+      throw error;
+    }
+  }
+
   async updateBookById(id: string, data: BookDTO) {
     try {
       return await prisma.book.update({
