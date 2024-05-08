@@ -103,6 +103,7 @@ export class PublisherModel {
       return await prisma.publisher.update({
         where: {
           id,
+          visible: true,
         },
         data: {
           visible: false,
