@@ -22,9 +22,16 @@ export class BookModel {
         },
       });
     } catch (error: unknown) {
+      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === "P2002" && error.meta && typeof error.meta.target === "string" && error.meta.target.includes("isbn")) {
           throw new Error("Book already exists");
+        }
+        else if (error.code === "P2003") {
+          throw new Error("Publisher not found");
+        }
+        else if (error.code === "P2025") {
+          throw new Error("One or more authors or categories not found");
         }
       }
       throw error;
