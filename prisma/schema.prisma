@@ -92,7 +92,8 @@ model Book {
 model Loan {
   id            String   @id @default(uuid())
   loanDate      DateTime @default(now())
-  returnDate    DateTime
+  dueDate       DateTime
+  returnDate    DateTime?
   fees          Float    @default(0)
   returned      Boolean  @default(false)
   condition     String?
