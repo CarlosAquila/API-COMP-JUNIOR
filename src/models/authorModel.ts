@@ -103,6 +103,7 @@ export class AuthorModel {
       return await prisma.author.update({
         where: {
           id,
+          visible: true
         },
         data: {
           visible: false,
