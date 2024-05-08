@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client';
 import UserDTO from '../dtos/userDTO';
+import bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 
@@ -7,11 +8,12 @@ export class UserModel {
 
   async createUser(data: UserDTO) {
     try {
+      const hashedPassword = await UserModel.hashPassword(data.password);
       return await prisma.user.create({
         data: {
           name: data.name,
           email: data.email,
-          password: data.password,
+          password: hashedPassword,
           address: data.address
         }
       });
@@ -61,7 +63,7 @@ export class UserModel {
 
   async getUserByEmail(email: string) {
     try {
-      return await prisma.user.findMany({
+      return await prisma.user.findUnique({
         where: {
           email,
           visible: true
@@ -123,5 +125,12 @@ export class UserModel {
     }
   }
 
+  static async hashPassword(password: string) {
+    return await bcrypt.hash(password, 10);
+  }
+
+  async comparePassword(password: string, hashedPassword: string) {
+    return await bcrypt.compare(password, hashedPassword);
+  }
 
 }

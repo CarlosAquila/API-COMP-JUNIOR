@@ -53,4 +53,12 @@ export class UserService {
     }
   }
 
+  async comparePassword(password: string, hash: string) {
+    try {
+      return userModel.comparePassword(password, hash);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
 }
