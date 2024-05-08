@@ -30,3 +30,5 @@ tscongif.json
 
 npm install --save-dev express
 npm i --save-dev @types/express
+
+npm i --save-dev @types/bcrypt
