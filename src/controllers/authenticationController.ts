@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
-//import { AuthenticationService } from "../services/authenticationService";
+import { AuthenticationService } from "../services/authenticationService";
 import { UserService } from "../services/userService";
-import { UserController } from "./userController";
 import UserDTO from "../dtos/userDTO";
-const userController = new UserController();
 const userService = new UserService();
 
 export class AuthenticationController {
@@ -33,7 +31,10 @@ export class AuthenticationController {
         if (!isPasswordValid) {
           return res.status(401).json({ error: "Invalid password" });
         }
-        return res.status(200).json({ message: "Login successful"});  
+        
+        const token = AuthenticationService.generateToken(user.id);
+        
+        return res.status(200).json({ user: {id: user.id, email: user.email},token, message: "Login successful"});  
         // Levar isso tudo para o service e receber somente isso:
         //const token = await AuthenticationService.login(email, password);
        // return res.status(200).json({ token });
