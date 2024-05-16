@@ -67,7 +67,7 @@ export class AuthenticationController {
         // Enviar e-mail com o link de redefinição de senha com um serviço de e-mail, Nodemailer
         const encryptedId = encrypt(user.id);
         const resetToken = await AuthenticationService.generateResetToken(encryptedId, email);
-        await sendEmail(email, "Reset your password", `<a href="http://localhost:3000/auth/reset-password?token=${resetToken}">Click here to reset your password</a>`);
+        await sendEmail(email, "Reset your password", `<a href="http://localhost:3000/auth/reset-password/${resetToken}">Click here to reset your password</a>`);
         return res.status(200).json({ message: "Email sent" });
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -79,11 +79,12 @@ export class AuthenticationController {
 
     //resetPassword
     async resetPassword(req: Request, res: Response) {
+      console.log("resetPassword");
       try {
-        // passar o DTO na senha
-        const { token, password } = req.body;
+        const { token } = req.params;
+       // const { token, password } = req.body;
         console.log(token);
-        // fazer validação de 2 senhas no service
+        const password = "123456as223ws2"
 
         //const { userId, email } = await AuthenticationService.validateResetToken(token);
         const decoded = await AuthenticationService.validateResetToken(token);
@@ -92,7 +93,9 @@ export class AuthenticationController {
           return res.status(404).json({ error: "User not found" });
         }
 
-        
+        // separar essa parte em outra rota, um post após o usupario digitar a senha 2x
+        // fazer validação de 2 senhas no service
+        // passar o DTO na senha const password = ValidationUtils.validatePassword(req.body.password);
         await userService.updateUserPassword(user.id, password);
         return res.status(200).json({ message: "Password updated" });
       } catch (error: unknown) {
