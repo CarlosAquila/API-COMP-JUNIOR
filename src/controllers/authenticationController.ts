@@ -3,7 +3,7 @@ import { AuthenticationService } from "../services/authenticationService";
 import { UserService } from "../services/userService";
 import { encrypt } from "../utils/crypt"
 import UserDTO from "../dtos/userDTO";
-import AuthDTO from "../dtos/authDTO";
+import AuthDTO from "../dtos/authenticationDTO";
 const userService = new UserService();
 
 export class AuthenticationController {
