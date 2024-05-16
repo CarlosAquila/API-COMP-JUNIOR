@@ -7,6 +7,8 @@ import AuthDTO from "../dtos/authenticationDTO";
 import { ValidationUtils } from "../utils/validationUtils";
 import { sendEmail } from "../utils/emailService";
 import { decrypt } from "../utils/crypt"
+import path from 'path';
+
 const userService = new UserService();
 
 export class AuthenticationController {
@@ -68,7 +70,7 @@ export class AuthenticationController {
         const encryptedId = encrypt(user.id);
         const resetToken = await AuthenticationService.generateResetToken(encryptedId, email);
         await sendEmail(email, "Reset your password", `<a href="http://localhost:3000/auth/reset-password/${resetToken}">Click here to reset your password</a>`);
-        return res.status(200).json({ message: "Email sent" });
+        return res.status(200).json({ message: "Email sent", resetToken: resetToken}); // facilitar o teste no postman
       } catch (error: unknown) {
         if (error instanceof Error) {
           return res.status(400).json({ error: error.message });
@@ -79,14 +81,9 @@ export class AuthenticationController {
 
     //resetPassword
     async resetPassword(req: Request, res: Response) {
-      console.log("resetPassword");
+      
       try {
         const { token } = req.params;
-       // const { token, password } = req.body;
-        console.log(token);
-        const password = "123456as223ws2"
-
-        //const { userId, email } = await AuthenticationService.validateResetToken(token);
         const decoded = await AuthenticationService.validateResetToken(token);
         const user = await userService.getUserById(decrypt(decoded.userID));
         if (!user) {
@@ -96,7 +93,34 @@ export class AuthenticationController {
         // separar essa parte em outra rota, um post após o usupario digitar a senha 2x
         // fazer validação de 2 senhas no service
         // passar o DTO na senha const password = ValidationUtils.validatePassword(req.body.password);
-        await userService.updateUserPassword(user.id, password);
+        //await userService.updateUserPassword(user.id, password);
+        const resetPagePath = path.join(__dirname, '../views/reset-password.html');
+        res.sendFile(resetPagePath);
+        //return res.status(200).json({ message: "Password updated" });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return res.status(400).json({ error: error.message });
+        }
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    }
+
+    //updatePassword
+    async updateUserPassword(req: Request, res: Response) {
+      try {
+        const { token } = req.params;
+        const { password, confirmPassword } = req.body;
+        if (password !== confirmPassword) {
+          return res.status(400).json({ error: "Passwords do not match" });
+        }
+        const decoded = await AuthenticationService.validateResetToken(token);
+        const user = await userService.getUserById(decrypt(decoded.userID));
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+        const newPassword = ValidationUtils.validatePassword(password);
+
+        await userService.updateUserPassword(user.id, newPassword);
         return res.status(200).json({ message: "Password updated" });
       } catch (error: unknown) {
         if (error instanceof Error) {
