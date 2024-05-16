@@ -7,8 +7,13 @@ import { employeeRoutes } from "./employee.routes";
 import { bookRoutes } from "./book.routes"
 import { loanRoutes } from "./loan.routes"
 import { authenticationRoutes } from "./authentication.routes"
+import { authenticationMiddleware } from "../middlewares/authenticationMiddleware";
  
 const routes = Router();
+
+routes.use("/auth", authenticationRoutes)
+
+routes.use(authenticationMiddleware);
 
 routes.use("/users", userRoutes);
 routes.use("/authors", authorRoutes);
@@ -17,6 +22,6 @@ routes.use("/categories", categoryRoutes);
 routes.use("/employees", employeeRoutes);
 routes.use("/books", bookRoutes)
 routes.use("/loans", loanRoutes)
-routes.use("/auth", authenticationRoutes)
+
 
 export { routes };

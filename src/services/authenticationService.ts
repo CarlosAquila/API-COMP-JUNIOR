@@ -14,6 +14,9 @@ export class AuthenticationService {
   
 
   // Função que vai verificar token
+  static verifyToken(token: string): jwt.JwtPayload {
+    return jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
+  }
 
   // Função que vai fazer login
   
