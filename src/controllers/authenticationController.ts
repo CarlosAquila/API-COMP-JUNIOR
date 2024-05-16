@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AuthenticationService } from "../services/authenticationService";
 import { UserService } from "../services/userService";
+import { encrypt } from "../utils/crypt"
 import UserDTO from "../dtos/userDTO";
 const userService = new UserService();
 
@@ -32,7 +33,10 @@ export class AuthenticationController {
           return res.status(401).json({ error: "Invalid password" });
         }
         
-        const token = AuthenticationService.generateToken(user.id);
+        // encryptar o id do usuário
+        const encryptedId = encrypt(user.id);
+
+        const token = AuthenticationService.generateToken(encryptedId);
         
         return res.status(200).json({ user: {id: user.id, email: user.email},token, message: "Login successful"});  
         // Levar isso tudo para o service e receber somente isso:

@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-const JWT_SECRET = 'meu_segredo_secreto_ inviolavel_que_em_uma_variavel_de_ambiente_deve_estar_e_totalmente_aleatória';
 export class AuthenticationService {
 
 
