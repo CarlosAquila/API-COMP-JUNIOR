@@ -16,7 +16,7 @@ export async function authenticationMiddleware(req: Request, res: Response, next
     return res.status(401).json({ error: 'Token is missing' });
   }
   try {
-    const decodedToken = AuthenticationService.verifyToken(token);
+    const decodedToken = await AuthenticationService.verifyToken(token);
     req.userId = decrypt(decodedToken.userID);
     next();
   } catch (error) {

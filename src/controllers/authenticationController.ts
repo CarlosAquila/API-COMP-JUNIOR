@@ -38,7 +38,7 @@ export class AuthenticationController {
         // encryptar o id do usuário
         const encryptedId = encrypt(user.id);
 
-        const token = AuthenticationService.generateToken(encryptedId);
+        const token = await AuthenticationService.generateToken(encryptedId);
         
         return res.status(200).json({ user: {id: user.id, email: user.email},token, message: "Login successful"});  
         // Levar isso tudo para o service e receber somente isso:

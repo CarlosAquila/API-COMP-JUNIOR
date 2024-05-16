@@ -6,16 +6,26 @@ export class AuthenticationService {
 
 
   // Função que vai gerar token com JWT
-  static generateToken(userID: string ): string { 
-    return jwt.sign( {userID}, process.env.JWT_SECRET as string, { 
-      expiresIn: process.env.JWT_EXPIRATION_TIME as string,
+  static async generateToken(userID: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      jwt.sign({ userID }, process.env.JWT_SECRET as string, { 
+        expiresIn: process.env.JWT_EXPIRATION_TIME as string },
+        (err, token) => {
+          if (err) reject(err);
+          else resolve(token as string);
+        }
+      );
     });
   }
-  
 
   // Função que vai verificar token
-  static verifyToken(token: string): jwt.JwtPayload {
-    return jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
+  static async verifyToken(token: string): Promise<jwt.JwtPayload> {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
+        if (err) reject(err);
+        else resolve(decoded as jwt.JwtPayload);
+      });
+    });
   }
 
   // Função que vai fazer login
