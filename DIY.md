@@ -30,3 +30,8 @@ tscongif.json
 
 npm install --save-dev express
 npm i --save-dev @types/express
+
+npm i --save-dev @types/bcrypt
+
+npm install jsonwebtoken
+npm i --save-dev @types/jsonwebtoken

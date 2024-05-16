@@ -21,7 +21,6 @@ export class LoanModel {
     } catch (error: unknown) {
      
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
-         console.log(error.meta);
         if (error.code === "P2003") {
           throw new Error("Not found");
         }
@@ -89,7 +88,6 @@ export class LoanModel {
         },
       });
     } catch (error: unknown) {
-      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === "P2025") {
           throw new Error("Loan not found");
