@@ -133,4 +133,25 @@ export class UserModel {
     return await bcrypt.compare(password, hashedPassword);
   }
 
+  async updateUserPassword(id: string, password: string) {
+    try {
+      const hashedPassword = await UserModel.hashPassword(password);
+      return await prisma.user.update({
+        where: {
+          id,
+          visible: true
+        },
+        data: {
+          password: hashedPassword
+        }
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error('User not found.');
+        }
+      }
+      throw error;
+    }
+  }
 }

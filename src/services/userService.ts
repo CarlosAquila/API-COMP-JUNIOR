@@ -61,4 +61,12 @@ export class UserService {
     }
   }
 
+  async updateUserPassword(id: string, password: string) {
+    try {
+      return userModel.updateUserPassword(id, password);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
 }
