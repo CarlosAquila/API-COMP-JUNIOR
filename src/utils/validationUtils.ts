@@ -4,7 +4,7 @@ export class ValidationUtils {
             throw new Error("Email is required");
         }
         // regex to validate email  
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; // email com seguinte formato: texto@texto
         if (!emailRegex.test(email)) {
             throw new Error("Invalid email format");
         }
