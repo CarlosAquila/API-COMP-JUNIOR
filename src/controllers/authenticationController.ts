@@ -24,7 +24,7 @@ export class AuthenticationController {
     async login(req: Request, res: Response) {
       try {
         const loginData: AuthDTO = new AuthDTO(req.body);
-        const { email, password } = req.body;
+        const { email, password } = loginData;
         const user = await userService.getUserByEmail(email);
         if (!user) {
           return res.status(404).json({ error: "User not found" });
