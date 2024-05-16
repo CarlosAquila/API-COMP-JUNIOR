@@ -1,3 +1,5 @@
+import { ValidationUtils } from "../utils/validationUtils";
+
 interface UserDTO {
     name: string;
     email: string;
@@ -8,8 +10,8 @@ interface UserDTO {
 class UserDTO {
     constructor(data: UserDTO) {
         this.name = this.validateName(data.name);
-        this.email = this.validateEmail(data.email);
-        this.password = this.validatePassword(data.password);
+        this.email = ValidationUtils.validateEmail(data.email);
+        this.password = ValidationUtils.validatePassword(data.password);
         this.address = this.validateAddress(data.address);
     }
 

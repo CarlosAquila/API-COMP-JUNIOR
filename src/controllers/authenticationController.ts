@@ -3,6 +3,7 @@ import { AuthenticationService } from "../services/authenticationService";
 import { UserService } from "../services/userService";
 import { encrypt } from "../utils/crypt"
 import UserDTO from "../dtos/userDTO";
+import AuthDTO from "../dtos/authDTO";
 const userService = new UserService();
 
 export class AuthenticationController {
@@ -22,6 +23,7 @@ export class AuthenticationController {
   
     async login(req: Request, res: Response) {
       try {
+        const loginData: AuthDTO = new AuthDTO(req.body);
         const { email, password } = req.body;
         const user = await userService.getUserByEmail(email);
         if (!user) {
