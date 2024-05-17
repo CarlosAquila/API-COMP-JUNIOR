@@ -20,10 +20,36 @@ model User {
   address      String?
   password      String
   loans         Loan[]
+  roles         Role[]
+  permissions   Permission[]
   visible       Boolean  @default(true)
   createdAt     DateTime @default(now())
 
   @@map("users")
+}
+
+model Permission {
+  id            String   @id @default(uuid())
+  name          String
+  description   String?
+  roles         Role[]
+  users         User[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("permissions")
+}
+
+model Role {
+  id            String   @id @default(uuid())
+  name          String
+  description   String?
+  permissions   Permission[]
+  users         User[]
+  createdAt     DateTime @default(now())
+  visible       Boolean  @default(true)
+
+  @@map("roles")
 }
 
 model Author {
