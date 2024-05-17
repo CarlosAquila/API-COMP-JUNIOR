@@ -9,6 +9,7 @@ import { loanRoutes } from "./loan.routes"
 import { authenticationRoutes } from "./authentication.routes"
 import { authenticationMiddleware } from "../middlewares/authenticationMiddleware";
 import { roleRoutes } from "./roles.routes";
+import { permissionRoutes } from "./permission.routes";
  
 const routes = Router();
 
@@ -24,6 +25,7 @@ routes.use("/employees", employeeRoutes);
 routes.use("/books", bookRoutes);
 routes.use("/loans", loanRoutes);
 routes.use("/roles", roleRoutes);
+routes.use("/permissions", permissionRoutes);
 
 
 export { routes };
