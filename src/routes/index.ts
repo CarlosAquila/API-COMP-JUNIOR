@@ -8,6 +8,7 @@ import { bookRoutes } from "./book.routes"
 import { loanRoutes } from "./loan.routes"
 import { authenticationRoutes } from "./authentication.routes"
 import { authenticationMiddleware } from "../middlewares/authenticationMiddleware";
+import { roleRoutes } from "./roles.routes";
  
 const routes = Router();
 
@@ -20,8 +21,9 @@ routes.use("/authors", authorRoutes);
 routes.use("/publishers", publisherRoutes);
 routes.use("/categories", categoryRoutes);
 routes.use("/employees", employeeRoutes);
-routes.use("/books", bookRoutes)
-routes.use("/loans", loanRoutes)
+routes.use("/books", bookRoutes);
+routes.use("/loans", loanRoutes);
+routes.use("/roles", roleRoutes);
 
 
 export { routes };
