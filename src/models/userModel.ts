@@ -37,7 +37,9 @@ export class UserModel {
           email: 'asc'
         },
         include: {
-          loans: {}
+          loans: {},
+          roles: {},
+          permissions: {}
         }
       });
     } catch (error: unknown) {
@@ -154,4 +156,77 @@ export class UserModel {
       throw error;
     }
   }
+
+  async addRoleToUser(id: string, roleId: string[]) {
+    try {
+      return await prisma.user.update({
+        where: {
+          id,
+          visible: true
+        },
+        data: {
+          roles: {
+            connect: roleId.map(roleId => ({ id: roleId }))
+          }
+        }
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error('Roles not found.');
+        }
+        else if (error.code === 'P2016') {
+          throw new Error('User not found.');
+        }
+      }
+      throw error;
+    }
+  }
+
+  async removeRoleFromUser(id: string, roleId: string[]) {
+    try {
+      return await prisma.user.update({
+        where: {
+          id,
+          visible: true
+        },
+        data: {
+          roles: {
+            disconnect: roleId.map(roleId => ({ id: roleId }))
+          }
+        }
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error('Role not found.');
+        }
+        else if (error.code === 'P2016') {
+          throw new Error('User not found.');
+        }
+      }
+      throw error;
+    }
+  }
+
+  async hasRole(id: string, roleId: string[]) {
+    try {
+      return await prisma.user.findFirst({
+        where: {
+          id,
+          roles: {
+            some: {
+              id: {
+                in: roleId.map(roleId => roleId)
+              }
+            }
+          }
+        }
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  
 }

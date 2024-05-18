@@ -69,4 +69,28 @@ export class UserService {
     }
   }
 
+  async addRoleToUser(userId: string, rolesId: string[]) {
+    try {
+      return userModel.addRoleToUser(userId, rolesId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async removeRoleFromUser(userId: string, roleId: string[]) {
+    try {
+      return userModel.removeRoleFromUser(userId, roleId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async hasRole(userId: string, roleId: string[]) {
+    try {
+      return userModel.hasRole(userId, roleId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
 }

@@ -95,5 +95,46 @@ export class UserController {
     }
   }
 
+  async addRoleToUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { roleId } = req.body; 
+      if (!roleId) {
+        return res.status(400).json({ error: "Role id is required" });
+      }
+      const role = await userService.hasRole(id, roleId);
+      if (role !== null) {
+        return res.status(400).json({ error: "User already have this role" });
+      }
+      const updatedUser = await userService.addRoleToUser(id, roleId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async removeRoleFromUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { roleId } = req.body; 
+      if (!roleId) {
+        return res.status(400).json({ error: "Role id is required" });
+      }
+      const role = await userService.hasRole(id, roleId);
+      if (role === null) {
+        return res.status(400).json({ error: "User does not have this role" });
+      }
+      const updatedUser = await userService.removeRoleFromUser(id, roleId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
 
 }
