@@ -9,6 +9,10 @@ userRoutes.get("/:id", userController.getUserById);
 userRoutes.get("/email/:email", userController.getUserByEmail);
 userRoutes.put("/update/:id", userController.updateUserById);
 userRoutes.delete("/delete/:id", userController.deleteUserById);
+userRoutes.put("/role/:id", userController.addRoleToUser);
+userRoutes.delete("/role/:id", userController.removeRoleFromUser);
+userRoutes.put("/permission/:id", userController.addPermissionToUser);
+userRoutes.delete("/permission/:id", userController.removePermissionFromUser);
 
 
 
