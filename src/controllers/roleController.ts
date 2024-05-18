@@ -95,5 +95,55 @@ export class RoleController {
     }
   }
 
+  async addPermissionsToRole(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionIds } = req.body;
+      if (!permissionIds) {
+        return res.status(400).json({ error: "Permission IDs is required" });
+      }
+      const role = await roleService.getRoleById(id);
+      if (!role) {
+        return res.status(404).json({ error: "Role not found" });
+      }
+      const permission = await roleService.hasPermissions(id, permissionIds);
+      if (permission !== null) {
+        return res.status(400).json({ error: "Role already have this permission" });
+      }
+      const updatedRole = await roleService.addPermissionsToRole(id, permissionIds);
+      return res.status(200).json(updatedRole);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async removePermissionsFromRole(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionIds } = req.body;
+      if (!permissionIds) {
+        return res.status(400).json({ error: "Permission ID is required" });
+      }
+      const role = await roleService.getRoleById(id);
+      if (!role) {
+        return res.status(404).json({ error: "Role not found" });
+      }
+      const permission = await roleService.hasPermissions(id, permissionIds);
+      if (permission === null) {
+        return res.status(400).json({ error: "Role does not have this permission" });
+      }
+      const updatedRole = await roleService.removePermissionsFromRole(id, permissionIds);
+      return res.status(200).json(updatedRole);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
 }
 

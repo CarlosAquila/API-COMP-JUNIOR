@@ -50,4 +50,28 @@ export class RoleService {
       throw error;
     }
   }
+
+  async addPermissionsToRole(id: string, permissionIds: string[]) {
+    try {
+      return roleModel.addPermissionsToRole(id, permissionIds);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async removePermissionsFromRole(id: string, permissionIds: string[]) {
+    try {
+      return roleModel.removePermissionsFromRole(id, permissionIds);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async hasPermissions(roleId: string, permissionIds: string[]) {
+    try {
+      return roleModel.hasPermissions(roleId, permissionIds);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
 }

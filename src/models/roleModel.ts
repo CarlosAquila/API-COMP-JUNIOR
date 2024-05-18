@@ -32,6 +32,7 @@ export class RoleModel {
         },
         include: {
           users: {},
+          permissions: {},
         },
       });
     } catch (error: unknown) {
@@ -48,6 +49,7 @@ export class RoleModel {
         },
         include: {
           users: {},
+          permissions: {},
         },
       });
     } catch (error: unknown) {
@@ -66,6 +68,7 @@ export class RoleModel {
         },
         include: {
           users: {},
+          permissions: {},
         },
       });
     } catch (error: unknown) {
@@ -115,6 +118,78 @@ export class RoleModel {
           throw new Error("Role not found");
         }
       }
+      throw error;
+    }
+  }
+
+  async addPermissionsToRole(id: string, permissionIds: string[]) {
+    try {
+      return await prisma.role.update({
+        where: {
+          id,
+          visible: true,
+        },
+        data: {
+          permissions: {
+            connect: permissionIds.map(permissionIds => ({ id: permissionIds })),
+          },
+        },
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          throw new Error("Role not found");
+        }
+        else if (error.code === "P2025") {
+          throw new Error("Permission not found");
+        }
+      }
+      throw error;
+    }
+  }
+
+  async removePermissionsFromRole(id: string, permissionIds: string[]) {
+    try {
+      return await prisma.role.update({
+        where: {
+          id,
+          visible: true,
+        },
+        data: {
+          permissions: {
+            disconnect: permissionIds.map(permissionIds => ({ id: permissionIds })),
+          },
+        },
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          throw new Error("Role not found");
+        }
+        else if (error.code === "P2025") {
+          throw new Error("Permission not found");
+        }
+      }
+      throw error;
+    }
+  }
+
+  async hasPermissions(roleId: string, permissionIds: string[]) {
+    try {
+      return await prisma.role.findFirst({
+        where: {
+          id: roleId,
+          visible: true,
+          permissions: {
+            some: {
+              id: {
+                in: permissionIds.map(permissionIds => permissionIds),
+              },
+            },
+          },
+        },
+      });
+    } catch (error: unknown) {
       throw error;
     }
   }

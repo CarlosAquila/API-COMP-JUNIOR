@@ -56,7 +56,11 @@ export class UserModel {
         },
         include: {
           loans: {},
-          roles: {},
+          roles: {
+            include: {
+              permissions: true
+            }
+          },
           permissions: {}
         }
       });
