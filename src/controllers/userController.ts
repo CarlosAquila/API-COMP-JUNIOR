@@ -95,5 +95,105 @@ export class UserController {
     }
   }
 
+  async addRoleToUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { roleId } = req.body; 
+      if (!roleId) {
+        return res.status(400).json({ error: "Role id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const role = await userService.hasRole(id, roleId);
+      if (role !== null) {
+        return res.status(400).json({ error: "User already have this role" });
+      }
+      const updatedUser = await userService.addRoleToUser(id, roleId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async removeRoleFromUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { roleId } = req.body; 
+      if (!roleId) {
+        return res.status(400).json({ error: "Role id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const role = await userService.hasRole(id, roleId);
+      if (role === null) {
+        return res.status(400).json({ error: "User does not have this role" });
+      }
+      const updatedUser = await userService.removeRoleFromUser(id, roleId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async addPermissionToUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionId } = req.body;
+      if (!permissionId) {
+        return res.status(400).json({ error: "Permission id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const permission = await userService.hasPermission(id, permissionId);
+      if (permission !== null) {
+        return res.status(400).json({ error: "User already have this permission" });
+      }
+      const updatedUser = await userService.addPermissionToUser(id, permissionId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async removePermissionFromUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionId } = req.body;
+      if (!permissionId) {
+        return res.status(400).json({ error: "Permission id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const permission = await userService.hasPermission(id, permissionId);
+      if (permission === null) {
+        return res.status(400).json({ error: "User does not have this permission" });
+      }
+      const updatedUser = await userService.removePermissionFromUser(id, permissionId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+  
 
 }
