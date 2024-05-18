@@ -102,6 +102,10 @@ export class UserController {
       if (!roleId) {
         return res.status(400).json({ error: "Role id is required" });
       }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
       const role = await userService.hasRole(id, roleId);
       if (role !== null) {
         return res.status(400).json({ error: "User already have this role" });
@@ -122,6 +126,10 @@ export class UserController {
       const { roleId } = req.body; 
       if (!roleId) {
         return res.status(400).json({ error: "Role id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
       }
       const role = await userService.hasRole(id, roleId);
       if (role === null) {
@@ -144,6 +152,10 @@ export class UserController {
       if (!permissionId) {
         return res.status(400).json({ error: "Permission id is required" });
       }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
       const permission = await userService.hasPermission(id, permissionId);
       if (permission !== null) {
         return res.status(400).json({ error: "User already have this permission" });
@@ -164,6 +176,10 @@ export class UserController {
       const { permissionId } = req.body;
       if (!permissionId) {
         return res.status(400).json({ error: "Permission id is required" });
+      }
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
       }
       const permission = await userService.hasPermission(id, permissionId);
       if (permission === null) {
