@@ -93,4 +93,27 @@ export class UserService {
     }
   }
 
+  async addPermissionToUser(userId: string, permissionId: string[]) {
+    try {
+      return userModel.addPermissionToUser(userId, permissionId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async removePermissionFromUser(userId: string, permissionId: string[]) {
+    try {
+      return userModel.removePermissionFromUser(userId, permissionId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async hasPermission(userId: string, permissionId: string[]) {
+    try {
+      return userModel.hasPermission(userId, permissionId);
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
 }

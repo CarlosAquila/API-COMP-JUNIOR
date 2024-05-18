@@ -228,5 +228,75 @@ export class UserModel {
     }
   }
 
-  
+  async addPermissionToUser(id: string, permissionId: string[]) {
+    try {
+      return await prisma.user.update({
+        where: {
+          id,
+          visible: true
+        },
+        data: {
+          permissions: {
+            connect: permissionId.map(permissionId => ({ id: permissionId }))
+          }
+        }
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error('Permissions not found.');
+        }
+        else if (error.code === 'P2016') {
+          throw new Error('User not found.');
+        }
+      }
+      throw error;
+    }
+  }
+
+  async removePermissionFromUser(id: string, permissionId: string[]) {
+    try {
+      return await prisma.user.update({
+        where: {
+          id,
+          visible: true
+        },
+        data: {
+          permissions: {
+            disconnect: permissionId.map(permissionId => ({ id: permissionId }))
+          }
+        }
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error('Permission not found.');
+        }
+        else if (error.code === 'P2016') {
+          throw new Error('User not found.');
+        }
+      }
+      throw error;
+    }
+  }
+
+  async hasPermission(id: string, permissionId: string[]) {
+    try {
+      return await prisma.user.findFirst({
+        where: {
+          id,
+          permissions: {
+            some: {
+              id: {
+                in: permissionId.map(permissionId => permissionId)
+              }
+            }
+          }
+        }
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
 }

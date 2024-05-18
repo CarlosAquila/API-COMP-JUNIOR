@@ -137,4 +137,46 @@ export class UserController {
     }
   }
 
+  async addPermissionToUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionId } = req.body;
+      if (!permissionId) {
+        return res.status(400).json({ error: "Permission id is required" });
+      }
+      const permission = await userService.hasPermission(id, permissionId);
+      if (permission !== null) {
+        return res.status(400).json({ error: "User already have this permission" });
+      }
+      const updatedUser = await userService.addPermissionToUser(id, permissionId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  async removePermissionFromUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { permissionId } = req.body;
+      if (!permissionId) {
+        return res.status(400).json({ error: "Permission id is required" });
+      }
+      const permission = await userService.hasPermission(id, permissionId);
+      if (permission === null) {
+        return res.status(400).json({ error: "User does not have this permission" });
+      }
+      const updatedUser = await userService.removePermissionFromUser(id, permissionId);
+      return res.status(200).json(updatedUser);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
 }
