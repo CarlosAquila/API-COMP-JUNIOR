@@ -30,7 +30,7 @@ model User {
 
 model Permission {
   id            String   @id @default(uuid())
-  name          String
+  name          String   @unique
   description   String?
   roles         Role[]
   users         User[]
@@ -42,7 +42,7 @@ model Permission {
 
 model Role {
   id            String   @id @default(uuid())
-  name          String
+  name          String   @unique
   description   String?
   permissions   Permission[]
   users         User[]

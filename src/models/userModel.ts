@@ -55,7 +55,9 @@ export class UserModel {
           visible: true
         },
         include: {
-          loans: {}
+          loans: {},
+          roles: {},
+          permissions: {}
         }
       });
     } catch (error: unknown) {
@@ -71,7 +73,9 @@ export class UserModel {
           visible: true
         },
         include: {
-          loans: {}
+          loans: {},
+          roles: {},
+          permissions: {}
         }
       });
     } catch (error: unknown) {
