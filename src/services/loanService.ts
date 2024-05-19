@@ -37,7 +37,24 @@ export class LoanService {
 
   async returnLoanById(id: string) {
     try {
-      return loanModel.returnLoanById(id);
+      const loan = await loanModel.getLoanById(id);
+      if (!loan) {
+        throw new Error("Loan not found");
+      }
+
+      const currentDate = new Date();
+      const dueDate = loan.dueDate;
+      let fine = 0;
+      // to do valor do emprestimo vai variar de acordo com o tipo de livro
+      
+      if (currentDate > dueDate) {
+        const diffTime = Math.abs(currentDate.getTime() - dueDate.getTime()); // in milliseconds
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // in days
+        fine = diffDays * 0.5; // 50 cents per day
+      }
+      
+
+      return loanModel.returnLoanById(id, currentDate, fine );
     } catch (error: unknown) {
       throw error;
     }

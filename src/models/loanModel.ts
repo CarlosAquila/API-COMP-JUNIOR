@@ -100,7 +100,7 @@ export class LoanModel {
     }
   }
 
-  async returnLoanById(id: string) {
+  async returnLoanById(id: string, returnDate: Date, fees: number) {
     try {
       return await prisma.loan.update({
         where: {
@@ -108,6 +108,8 @@ export class LoanModel {
           visible: true,
         },
         data: {
+          returnDate,
+          fees,
           returned: true,
         },
         include: {
