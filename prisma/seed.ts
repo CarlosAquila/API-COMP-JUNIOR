@@ -358,7 +358,7 @@ async function main() {
         returnDate: null,
         fees: 0,
         returned: false,
-        user: { connect: { email: 'alugador@gmail.com.br' } },
+        user: { connect: { email: 'tenant@gmail.com.br' } },
         employee: { connect: { id: employees[0].id } },
         book: { connect: { id: books[0].id } }
       },
@@ -370,7 +370,7 @@ async function main() {
         returnDate: null,
         fees: 0,
         returned: false,
-        user: { connect: { email: 'alugador@gmail.com.br' } },
+        user: { connect: { email: 'tenant@gmail.com.br' } },
         employee: { connect: { id: employees[1].id } },
         book: { connect: { id: books[1].id } }
       },
