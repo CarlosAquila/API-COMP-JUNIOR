@@ -103,22 +103,22 @@ async function main() {
   // Create users
   const users = await Promise.all([
     prisma.user.upsert({
-      where: { email: 'alugador@gmail.com.br' },
+      where: { email: 'tenant@gmail.com.br' },
       update: {},
       create: {
-        email: 'alugador@gmail.com.br',
+        email: 'tenant@gmail.com.br',
         password: hashedPassword,
-        name: 'Alugador',
+        name: 'Tenant',
         roles: { connect: { name: 'basic user' } },
       },
     }),
     prisma.user.upsert({
-      where: { email: 'bibliotecario@gmail.com.br' },
+      where: { email: 'librarian@gmail.com.br' },
       update: {},
       create: {
-        email: 'bibliotecario@gmail.com.br',
+        email: 'librarian@gmail.com.br',
         password: hashedPassword,
-        name: 'Bibliotecario',
+        name: 'Librarian',
         roles: { connect: { name: 'librarian' } },
       },
     }),
@@ -219,34 +219,34 @@ async function main() {
   // Create authors
   const authors = await Promise.all([
     prisma.author.create({
-      data: { name: "Author One", biography: "Biography of Author One" },
+      data: { name: "J.R.R. Tolkien", biography: "English writer, poet, and philologist, best known for The Lord of the Rings." },
     }),
     prisma.author.create({
-      data: { name: "Author Two", biography: "Biography of Author Two" },
+      data: { name: "J.K. Rowling", biography: "British author, best known for the Harry Potter series." },
     }),
     prisma.author.create({
-      data: { name: "Author Three", biography: "Biography of Author Three" },
+      data: { name: "George R.R. Martin", biography: "American novelist and short story writer, known for A Song of Ice and Fire series." },
     }),
     prisma.author.create({
-      data: { name: "Author Four", biography: "Biography of Author Four" },
+      data: { name: "Agatha Christie", biography: "English writer known for her 66 detective novels and 14 short story collections." },
     }),
     prisma.author.create({
-      data: { name: "Author Five", biography: "Biography of Author Five" },
+      data: { name: "Stephen King", biography: "American author of horror, supernatural fiction, suspense, and fantasy novels." },
     }),
     prisma.author.create({
-      data: { name: "Author Six", biography: "Biography of Author Six" },
+      data: { name: "Jane Austen", biography: "English novelist known for her six major novels, including Pride and Prejudice." },
     }),
     prisma.author.create({
-      data: { name: "Author Seven", biography: "Biography of Author Seven" },
+      data: { name: "Mark Twain", biography: "American writer, humorist, and lecturer, best known for The Adventures of Tom Sawyer and Adventures of Huckleberry Finn." },
     }),
     prisma.author.create({
-      data: { name: "Author Eight", biography: "Biography of Author Eight" },
+      data: { name: "Ernest Hemingway", biography: "American novelist, short story writer, and journalist, known for works like The Old Man and the Sea." },
     }),
     prisma.author.create({
-      data: { name: "Author Nine", biography: "Biography of Author Nine" },
+      data: { name: "F. Scott Fitzgerald", biography: "American novelist and short story writer, widely regarded as one of the greatest American writers of the 20th century." },
     }),
     prisma.author.create({
-      data: { name: "Author Ten", biography: "Biography of Author Ten" },
+      data: { name: "Isaac Asimov", biography: "American writer and professor of biochemistry, known for his works of science fiction and popular science." },
     })
   ]);
 
@@ -285,12 +285,6 @@ async function main() {
   ]);
 
   // Create books
-  const fantasyCategory = await prisma.category.findUnique({ where: { name: "Fantasy" } });
-  const authorOne = await prisma.author.findUnique({ where: { name: "Author One" } });
-  const penguinPublisher = await prisma.publisher.findUnique({ where: { name: "Penguin Random House" } });
-
-
-  // Create books
   const books = await Promise.all([
     prisma.book.create({
       data: {
@@ -302,13 +296,11 @@ async function main() {
         authors: { 
           connect: [
             { id: authors[0].id },
-            // Add more author IDs as needed
           ] 
         },
         categories: { 
           connect: [
             { id: categories[0].id },
-            // Add more category IDs as needed
           ] 
         },
         visible: true,
@@ -316,21 +308,40 @@ async function main() {
     }),
     prisma.book.create({
       data: {
-        title: "Moby Dick",
-        description: "A novel by Herman Melville",
+        title: "Harry Potter and the Philosopher's Stone",
+        description: "A novel by J.K. Rowling",
         isbn: "9781503280786",
         year: 1851,
         publisher: { connect: { id: publishers[0].id } },
         authors: { 
           connect: [
-            { id: authors[0].id },
-            // Add more author IDs as needed
+            { id: authors[1].id },
           ] 
         },
         categories: { 
           connect: [
-            { id: categories[0].id },
-            // Add more category IDs as needed
+            { id: categories[3].id },
+          ] 
+        },
+        visible: true,
+      },
+    }),
+    prisma.book.create({
+      data: {
+        title: "A Game of Thrones",
+        description: "A novel by George R.R. Martin",
+        isbn: "9780553103540",
+        year: 1851,
+        publisher: { connect: { id: publishers[0].id } },
+        authors: { 
+          connect: [
+            { id: authors[2].id },
+          ] 
+        },
+        categories: { 
+          connect: [
+            { id: categories[3].id }, // Fantasy
+            { id: categories[0].id }  // Fiction
           ] 
         },
         visible: true,
