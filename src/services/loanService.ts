@@ -41,12 +41,15 @@ export class LoanService {
       if (!loan) {
         throw new Error("Loan not found");
       }
-
+      //verifica se ja foi devolvido
+      if (loan.returnDate) {
+        throw new Error("Loan already returned");
+      }
       const currentDate = new Date();
       const dueDate = loan.dueDate;
       let fine = 0;
       // to do valor do emprestimo vai variar de acordo com o tipo de livro
-      
+
       if (currentDate > dueDate) {
         const diffTime = Math.abs(currentDate.getTime() - dueDate.getTime()); // in milliseconds
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // in days
