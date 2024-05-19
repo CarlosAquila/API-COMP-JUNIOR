@@ -284,6 +284,19 @@ async function main() {
     })
   ]);
 
+  // Create loanTypes
+  const loanTypes = await Promise.all([
+    prisma.loanType.create({
+      data: { name: "Regular", description: "Regular loan type", value: 1.0, time: 7 },
+    }),
+    prisma.loanType.create({
+      data: { name: "Long Term", description: "Long Term loan type", value: 5.33, time: 14 },
+    }),
+    prisma.loanType.create({
+      data: { name: "Reference", description: "Reference loan type", value: 0, time: 0 },
+    })
+  ]);
+
   // Create books
   const books = await Promise.all([
     prisma.book.create({
@@ -303,6 +316,7 @@ async function main() {
             { id: categories[0].id },
           ] 
         },
+        loanType: { connect: { id: loanTypes[0].id } },
         visible: true,
       },
     }),
@@ -323,6 +337,7 @@ async function main() {
             { id: categories[3].id },
           ] 
         },
+        loanType: { connect: { id: loanTypes[1].id } },
         visible: true,
       },
     }),
@@ -344,6 +359,7 @@ async function main() {
             { id: categories[0].id }  // Fiction
           ] 
         },
+        loanType: { connect: { id: loanTypes[2].id } },
         visible: true,
       },
     })
@@ -377,7 +393,7 @@ async function main() {
     })
   ]);
 
-  console.log({ roles, permissions, users, employees, publishers, authors, categories, books, loans });
+  console.log({ roles, permissions, users, employees, publishers, authors, categories, books, loans, loanTypes });
 }
 
 main()

@@ -45,5 +45,7 @@ npm install bcryptjs
 npm i --save-dev @types/bcryptjs
 
 npm run seed
+npm run migrate
 npx prisma migrate deploy
 npx prisma db seed
+npx prisma generate
