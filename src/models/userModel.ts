@@ -8,13 +8,24 @@ export class UserModel {
 
   async createUser(data: UserDTO) {
     try {
+      const basicRole = await prisma.role.findUnique({
+        where: { name: "basic user" },
+      });
+      if (!basicRole) {
+        throw new Error("Role 'basic user' not found");
+      }
       const hashedPassword = await UserModel.hashPassword(data.password);
       return await prisma.user.create({
         data: {
           name: data.name,
           email: data.email,
           password: hashedPassword,
-          address: data.address
+          address: data.address,
+          roles: {
+            connect: {
+              id: basicRole.id
+            }
+          }
         }
       });
     } catch (error: unknown) {
