@@ -17,6 +17,7 @@ const routes = Router();
 routes.use("/auth", authenticationRoutes)
 
 routes.use(authenticationMiddleware);
+
 routes.use(roleMiddleware(["basic user", "librarian", "admin"]));
 
 routes.use("/authors",authorRoutes);
@@ -25,12 +26,11 @@ routes.use("/categories", categoryRoutes);
 routes.use("/books", bookRoutes);
 
 
-//routes.use(roleMiddleware(["librarian", "admin"]));
+routes.use(roleMiddleware(["librarian", "admin"]));
 
 routes.use("/loans", loanRoutes);
 
-//routes.use(roleMiddleware(["admin"]));
-//routes.use(permissionMiddleware(["create role", "update role", "delete role", "create permission", "update permission", "delete permission"]));
+routes.use(roleMiddleware(["admin"]));
 
 //to do o admin pode fazer tudo
 routes.use("/users", userRoutes);
