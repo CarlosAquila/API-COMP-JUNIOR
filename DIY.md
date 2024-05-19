@@ -40,3 +40,10 @@ npm install nodemailer
 npm i --save-dev @types/nodemailer
 
 npm install ts-node typescript @types/node --save-dev
+
+npm install bcryptjs
+npm i --save-dev @types/bcryptjs
+
+npm run seed
+npx prisma migrate deploy
+npx prisma db seed
