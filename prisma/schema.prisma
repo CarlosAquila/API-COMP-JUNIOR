@@ -54,7 +54,7 @@ model Role {
 
 model Author {
   id            String   @id @default(uuid())
-  name          String
+  name          String   @unique
   biography     String?
   books         Book[]
   createdAt     DateTime @default(now())
@@ -65,7 +65,7 @@ model Author {
 
 model Publisher {
   id            String   @id @default(uuid())
-  name          String
+  name          String   @unique
   address       String?
   books         Book[]
   createdAt     DateTime @default(now())
@@ -76,7 +76,7 @@ model Publisher {
 
 model Category {
   id            String   @id @default(uuid())
-  name          String
+  name          String   @unique
   description   String?
   books         Book[]
   createdAt     DateTime @default(now())
@@ -118,9 +118,9 @@ model Book {
 model Loan {
   id            String   @id @default(uuid())
   loanDate      DateTime @default(now())
-  dueDate       DateTime
-  returnDate    DateTime?
-  fees          Float    @default(0)
+  dueDate       DateTime // data de devolução
+  returnDate    DateTime? // data que o livro foi devolvido
+  fees          Float    @default(0) // multa
   returned      Boolean  @default(false)
   condition     String?
   paymethod     String?
