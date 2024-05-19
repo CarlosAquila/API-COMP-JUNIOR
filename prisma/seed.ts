@@ -287,13 +287,13 @@ async function main() {
   // Create loanTypes
   const loanTypes = await Promise.all([
     prisma.loanType.create({
-      data: { name: "Regular", description: "Regular loan type", value: 1.0, time: 7 },
+      data: { name: "Regular", description: "Regular loan type", fine: 1.0, day: 7 },
     }),
     prisma.loanType.create({
-      data: { name: "Long Term", description: "Long Term loan type", value: 5.33, time: 14 },
+      data: { name: "Long Term", description: "Long Term loan type", fine: 5.33, day: 14 },
     }),
     prisma.loanType.create({
-      data: { name: "Reference", description: "Reference loan type", value: 0, time: 0 },
+      data: { name: "Reference", description: "Reference loan type", fine: 0, day: 0 },
     })
   ]);
 

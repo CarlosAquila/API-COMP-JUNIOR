@@ -139,8 +139,8 @@ model Loan {
 model loanType{
   id            String   @id @default(uuid())
   name          String   @unique
-  value         Float
-  time          Int
+  fine         Float
+  day          Int
   description   String?
   books         Book[]
   createdAt     DateTime @default(now())
