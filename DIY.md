@@ -38,3 +38,5 @@ npm i --save-dev @types/jsonwebtoken
 
 npm install nodemailer
 npm i --save-dev @types/nodemailer
+
+npm install ts-node typescript @types/node --save-dev
