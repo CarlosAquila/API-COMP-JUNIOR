@@ -37,23 +37,32 @@ export class LoanService {
 
   async returnLoanById(id: string) {
     try {
-      const loan = await loanModel.getLoanById(id);
-      if (!loan) {
+      const loanWithBook = await loanModel.getLoanWithBookLoanTypeById(id);
+      if (!loanWithBook) {
         throw new Error("Loan not found");
       }
       //verifica se ja foi devolvido
-      if (loan.returnDate) {
+      if (loanWithBook.returnDate) {
         throw new Error("Loan already returned");
       }
+      // Verifica o livro do emprestimo
+      const book = loanWithBook.book;
+      if (!book) {
+        throw new Error("Book not found");
+      }
       const currentDate = new Date();
-      const dueDate = loan.dueDate;
+      const dueDate = loanWithBook.dueDate;
       let fine = 0;
       // to do valor do emprestimo vai variar de acordo com o tipo de livro
+      //pega o tipo de emprestimo do livro
+      const fee = book.loanType.fine;
+      console.log(fee);
 
+      // Verifica se esta atrasado
       if (currentDate > dueDate) {
         const diffTime = Math.abs(currentDate.getTime() - dueDate.getTime()); // in milliseconds
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // in days
-        fine = diffDays * 0.5; // 50 cents per day
+        fine = diffDays * fee; // 50 cents per day
       }
       
 
