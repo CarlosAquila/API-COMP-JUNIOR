@@ -10,6 +10,7 @@ import { authenticationRoutes } from "./authentication.routes"
 import { authenticationMiddleware } from "../middlewares/authenticationMiddleware";
 import { roleRoutes } from "./roles.routes";
 import { permissionRoutes } from "./permission.routes";
+import { loanTypeRoutes } from "./loanType.routes";
 import {roleMiddleware, permissionMiddleware } from "../middlewares/accessControlMiddleware";
  
 const routes = Router();
@@ -37,6 +38,7 @@ routes.use("/users", userRoutes);
 routes.use("/employees", employeeRoutes);
 routes.use("/roles", roleRoutes);
 routes.use("/permissions", permissionRoutes);
+routes.use("/loanTypes", loanTypeRoutes);
 
 
 
