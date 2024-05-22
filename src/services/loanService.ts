@@ -50,13 +50,13 @@ export class LoanService {
       if (!book) {
         throw new Error("Book not found");
       }
+
       const currentDate = new Date();
       const dueDate = loanWithBook.dueDate;
       let fine = 0;
-      // to do valor do emprestimo vai variar de acordo com o tipo de livro
+
       //pega o tipo de emprestimo do livro
       const fee = book.loanType.fine;
-      console.log(fee);
 
       // Verifica se esta atrasado
       if (currentDate > dueDate) {
@@ -64,6 +64,9 @@ export class LoanService {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // in days
         fine = diffDays * fee; // 50 cents per day
       }
+
+      //todo: implementar pagamento
+      
       
 
       return loanModel.returnLoanById(id, currentDate, fine );
