@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma, Loan, Book } from "@prisma/client";
 import LoanDTO from "../dtos/loanDTO";
 const prisma = new PrismaClient();
 
@@ -65,6 +65,46 @@ export class LoanModel {
     }
   }
 
+  async getLoanWithBookLoanTypeById(id: string): Promise<Loan & { book: Book & { loanType: { fine: number; day: number } } }| null> {
+    try {
+      return await prisma.loan.findUnique({
+        where: {
+          id,
+          visible: true,
+        },
+        include: {
+          book: {include: {loanType: {
+            //seleciona tudo do loantype
+            select: {
+              fine: true,
+              day: true,
+            }
+          }}},
+        },
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
+  async getLoanTypeByBookId(bookId: string) {
+    try {
+      return await prisma.loan.findFirst({
+        where: {
+          bookId,
+          visible: true,
+        },
+        include: {
+          book: {},
+          user: {},
+          employee: {},
+        },
+      });
+    } catch (error: unknown) {
+      throw error;
+    }
+  }
+
   async updateLoanById(id: string, data: LoanDTO) {
     try {
       return await prisma.loan.update({
@@ -100,7 +140,7 @@ export class LoanModel {
     }
   }
 
-  async returnLoanById(id: string) {
+  async returnLoanById(id: string, returnDate: Date, fees: number) {
     try {
       return await prisma.loan.update({
         where: {
@@ -108,6 +148,8 @@ export class LoanModel {
           visible: true,
         },
         data: {
+          returnDate,
+          fees,
           returned: true,
         },
         include: {
