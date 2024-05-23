@@ -8,6 +8,7 @@ interface BookDTO {
     publisherId: string;
     authors: string[];
     categories: string[];
+    loanTypeId: string;
 }
 
 class BookDTO {
@@ -19,6 +20,7 @@ class BookDTO {
         this.publisherId = this.validatepublisherId(data.publisherId);
         this.authors = this.validateAuthors(data.authors);
         this.categories = this.validateCategories(data.categories);
+        this.loanTypeId = this.validateLoanType(data.loanTypeId);
     }
 
     private validateTitle(title: string): string {
@@ -78,6 +80,13 @@ class BookDTO {
         throw new Error("Categories are required");
       }
       return categories;
+    }
+
+    private validateLoanType(loanType: string): string {
+      if (!loanType) {
+        throw new Error("Loan type is required");
+      }
+      return loanType;
     }
 }
 
