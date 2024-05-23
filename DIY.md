@@ -49,3 +49,6 @@ npm run migrate
 npx prisma migrate deploy
 npx prisma db seed
 npx prisma generate
+
+npm install vitest 
+npm i --save-dev vitest
