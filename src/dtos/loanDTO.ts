@@ -58,9 +58,6 @@ class LoanDTO {
   }
 
   validateFees(fees: number): number {
-    if (!fees) {
-      throw new Error("Fees are required");
-    }
     return fees;
   }
 

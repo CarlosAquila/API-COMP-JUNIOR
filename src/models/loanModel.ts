@@ -14,7 +14,6 @@ export class LoanModel {
           returnDate: data.returnDate,
           condition: data.condition,
           paymethod: data.paymethod,
-          fees: data.fees,
           dueDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
         },
       });
