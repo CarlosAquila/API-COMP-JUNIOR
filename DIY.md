@@ -50,5 +50,8 @@ npx prisma migrate deploy
 npx prisma db seed
 npx prisma generate
 
-npm install vitest 
-npm i --save-dev vitest
+npm i --save-dev jest
+npm i --save-dev ts-jest    
+npm i --save-dev @types/jest
+ npm install jest supertest    
+ npm i --save-dev @types/supertest
