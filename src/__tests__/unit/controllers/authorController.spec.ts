@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { AuthorController } from '../../controllers/authorController';
-import { AuthorService } from '../../services/authorService';
+import { AuthorController } from '../../../controllers/authorController';
+import { AuthorService } from '../../../services/authorService';
 
 // Mock do AuthorService
-jest.mock('../../services/authorService');
+jest.mock('../../../services/authorService');
 
 describe('AuthorController', () => {
   let authorController: AuthorController;
@@ -23,7 +23,7 @@ describe('AuthorController', () => {
 
   describe('getAuthorByName', () => {
     it('should return author details when a valid name is provided', async () => {
-      const authorData = { name: 'NomeDoAutor', otherProperty: 'value' };
+      const authorData = { name: 'NomeDoAutor', biography: 'value' };
       (AuthorService.prototype.getAuthorByName as jest.Mock).mockResolvedValue(authorData);
 
       mockRequest = {
