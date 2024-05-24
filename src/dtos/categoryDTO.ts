@@ -19,10 +19,7 @@ class CategoryDTO implements ICategoryDTO {
         return name;
     }
 
-    private validateDescription(description: string | undefined): string {
-      if (!description) {
-        return "";
-      }
+    private validateDescription(description?: string): string  | undefined {
         return description;
     }
 }

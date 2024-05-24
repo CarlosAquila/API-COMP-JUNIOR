@@ -1,16 +1,30 @@
-class LoanDTO {
+interface ILoanDTO {
   bookId: string;
   userId: string;
   employeeId: string;
   loanDate: Date;
-  returnDate: Date;
+  returnDate?: Date;
   fees: number;
-  condition: string;
-  paymethod: string;
+  condition?: string;
+  paymethod?: string;
+  returned: boolean;
+  dueDate: Date;
+}
+
+
+class LoanDTO implements ILoanDTO{
+  bookId: string;
+  userId: string;
+  employeeId: string;
+  loanDate: Date;
+  returnDate?: Date;
+  fees: number;
+  condition?: string;
+  paymethod?: string;
   returned: boolean;
   dueDate: Date;
   
-  constructor(data: any) {
+  constructor(data: ILoanDTO) {
     this.bookId = this.validateBookId(data.bookId);
     this.userId = this.validateUserId(data.userId);
     this.employeeId = this.validateEmployeeId(data.employeeId);
@@ -48,11 +62,9 @@ class LoanDTO {
     return loanDate;
   }
 
-  validateReturnDate(returnDate: Date): Date {
-    if (returnDate) {
-      if (returnDate < new Date()) {
-        throw new Error("Return date must be in the future");
-      }
+  validateReturnDate(returnDate?: Date): Date | undefined{
+    if (returnDate && returnDate < new Date()) {
+      throw new Error("Return date must be in the future");
     }
     return returnDate;
   }
@@ -61,11 +73,11 @@ class LoanDTO {
     return fees;
   }
 
-  validateCondition(condition: string): string {
+  validateCondition(condition?: string): string | undefined {
     return condition;
   }
 
-  validatePaymethod(paymethod: string): string {
+  validatePaymethod(paymethod?: string): string | undefined {
     return paymethod;
   }
 

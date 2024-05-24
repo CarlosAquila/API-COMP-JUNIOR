@@ -20,10 +20,7 @@ class UserDTO implements IUserDTO{
         this.address = this.validateAddress(data.address);
     }
 
-    private validateName(name: string | undefined): string {
-      if (!name) {
-        return "";
-      }
+    private validateName(name?: string): string | undefined{
         return name;
     }
 

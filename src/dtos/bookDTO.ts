@@ -1,8 +1,6 @@
-import e from "express";
-
-interface BookDTO {
+interface IBookDTO {
     title: string;
-    description: string;
+    description?: string;
     isbn: string;
     year: number;
     publisherId: string;
@@ -11,7 +9,16 @@ interface BookDTO {
     loanTypeId: string;
 }
 
-class BookDTO {
+class BookDTO implements IBookDTO{
+    title: string;
+    description?: string;
+    isbn: string;
+    year: number;
+    publisherId: string;
+    authors: string[];
+    categories: string[];
+    loanTypeId: string;
+
     constructor(data: BookDTO) {
         this.title = this.validateTitle(data.title);
         this.description = this.validateDescription(data.description);
@@ -30,7 +37,7 @@ class BookDTO {
         return title;
     }
 
-    private validateDescription(description: string): string {
+    private validateDescription(description?: string): string | undefined{
         return description;
     }
 

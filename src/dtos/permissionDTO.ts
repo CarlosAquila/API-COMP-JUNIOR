@@ -19,10 +19,7 @@ class PermissionDTO implements IPermissionDTO{
       return name;
   }
 
-  private validateDescription(description: string | undefined): string {
-    if (!description) {
-      throw new Error("Description is required");
-    }
+  private validateDescription(description?: string): string | undefined{
       return description;
   }
 }

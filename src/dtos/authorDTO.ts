@@ -19,11 +19,8 @@ class AuthorDTO implements IAuthorDTO {
       return name;
   }
 
-  private validateBiography(biography: string | undefined): string {
-    if (!biography) { 
-      return ""; 
-    }
-    if (biography.length < 15) {
+  private validateBiography(biography?: string): string | undefined {
+    if (biography && biography.length < 15) {
       throw new Error("Biography is too short");
     } 
     return biography;

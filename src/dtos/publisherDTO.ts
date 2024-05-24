@@ -1,10 +1,13 @@
-interface PublisherDTO {
+interface IPublisherDTO {
     name: string;
-    address: string;
+    address?: string;
 }
 
-class PublisherDTO {
-    constructor(data: PublisherDTO) {
+class PublisherDTO implements IPublisherDTO{
+    name: string;
+    address?: string;
+
+    constructor(data: IPublisherDTO) {
         this.name = this.validateName(data.name);
         this.address = this.validateAddress(data.address);
     }
@@ -16,7 +19,7 @@ class PublisherDTO {
         return name;
     }
 
-    private validateAddress(address: string): string {
+    private validateAddress(address?: string): string | undefined{
         return address;
     }
 }
