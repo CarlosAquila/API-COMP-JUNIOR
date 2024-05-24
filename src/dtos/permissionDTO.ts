@@ -1,10 +1,13 @@
-interface PermissionDTO {
+interface IPermissionDTO {
   name: string;
-  description: string;
+  description?: string;
 }
 
-class PermissionDTO {
-  constructor(data: PermissionDTO) {
+class PermissionDTO implements IPermissionDTO{
+  name: string;
+  description?: string;
+
+  constructor(data: IPermissionDTO) {
       this.name = this.validateName(data.name);
       this.description = this.validateDescription(data.description);
   }
@@ -16,7 +19,10 @@ class PermissionDTO {
       return name;
   }
 
-  private validateDescription(description: string): string {
+  private validateDescription(description: string | undefined): string {
+    if (!description) {
+      throw new Error("Description is required");
+    }
       return description;
   }
 }
