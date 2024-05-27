@@ -1,11 +1,16 @@
-import { PrismaClient, Author, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import AuthorDTO from "../dtos/authorDTO";
-const prisma = new PrismaClient();
 
 export class AuthorModel {
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+
   async createAuthor(data: AuthorDTO) {
     try {
-      return await prisma.author.create({
+      return await this.prisma.author.create({
         data: {
           name: data.name,
           biography: data.biography,
@@ -23,7 +28,7 @@ export class AuthorModel {
 
   async getAuthors() {
     try {
-      return await prisma.author.findMany({
+      return await this.prisma.author.findMany({
         where: {
           visible: true,
         },
@@ -41,7 +46,7 @@ export class AuthorModel {
 
   async getAuthorById(id: string) {
     try {
-      return await prisma.author.findUnique({
+      return await this.prisma.author.findUnique({
         where: {
           id,
           visible: true,
@@ -57,7 +62,7 @@ export class AuthorModel {
 
   async getAuthorByName(name: string) {
     try {
-      return await prisma.author.findMany({
+      return await this.prisma.author.findMany({
         where: {
           name: {
             contains: name,
@@ -75,7 +80,7 @@ export class AuthorModel {
 
   async updateAuthorById(id: string, data: AuthorDTO) {
     try {
-      return await prisma.author.update({
+      return await this.prisma.author.update({
         where: {
           id,
           visible: true
@@ -100,7 +105,7 @@ export class AuthorModel {
 
   async deleteAuthorById(id: string) {
     try {
-      return await prisma.author.update({
+      return await this.prisma.author.update({
         where: {
           id,
           visible: true
