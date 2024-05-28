@@ -1,12 +1,17 @@
-interface LoanTypeDTO {
+interface ILoanTypeDTO {
   name: string;
   fine: number;
   day: number;
-  description: string;
+  description?: string;
 }
 
-class LoanTypeDTO {
-  constructor(data: LoanTypeDTO) {
+class LoanTypeDTO implements ILoanTypeDTO{
+  name: string;
+  fine: number;
+  day: number;
+  description?: string;
+
+  constructor(data: ILoanTypeDTO) {
     this.name = this.validateName(data.name);
     this.fine = this.validateFine(data.fine);
     this.day = this.validateDay(data.day);
@@ -34,7 +39,7 @@ class LoanTypeDTO {
     return day;
   }
 
-  private validateDescription(description: string): string {
+  private validateDescription(description?: string): string | undefined {
     return description;
   }
 }

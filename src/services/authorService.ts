@@ -1,11 +1,17 @@
 import { AuthorModel } from "../models/authorModel";
 import AuthorDTO from "../dtos/authorDTO";
-const authorModel = new AuthorModel();
+
 
 export class AuthorService {
+  private authorModel: AuthorModel;
+
+  constructor(authorModel: AuthorModel) {
+    this.authorModel = authorModel;
+  }
+  
   async createAuthor(data: AuthorDTO) {
     try {
-      return authorModel.createAuthor(data);
+      return await this.authorModel.createAuthor(data);
     } catch (error: unknown) {
       throw error;
     }
@@ -13,7 +19,7 @@ export class AuthorService {
 
   async getAuthors() {
     try {
-      return authorModel.getAuthors();
+      return await this.authorModel.getAuthors();
     } catch (error: unknown) {
       throw error;
     }
@@ -21,7 +27,7 @@ export class AuthorService {
 
   async getAuthorById(id: string) {
     try {
-      return authorModel.getAuthorById(id);
+      return await this.authorModel.getAuthorById(id);
     } catch (error: unknown) {
       throw error;
     }
@@ -29,7 +35,7 @@ export class AuthorService {
 
   async getAuthorByName(name: string) {
     try {
-      return authorModel.getAuthorByName(name);
+      return await this.authorModel.getAuthorByName(name);
     } catch (error: unknown) {
       throw error;
     }
@@ -37,7 +43,7 @@ export class AuthorService {
 
   async updateAuthorById(id: string, data: AuthorDTO) {
     try {
-      return authorModel.updateAuthorById(id, data);
+      return await this.authorModel.updateAuthorById(id, data);
     } catch (error: unknown) {
       throw error;
     }
@@ -45,7 +51,7 @@ export class AuthorService {
 
   async deleteAuthorById(id: string) {
     try {
-      return authorModel.deleteAuthorById(id);
+      return await this.authorModel.deleteAuthorById(id);
     } catch (error: unknown) {
       throw error;
     }

@@ -19,6 +19,7 @@ export class BookModel {
           categories: {
             connect: data.categories.map(categoriesId => ({ id: categoriesId })),
           },
+          loanTypeId: data.loanTypeId,
         },
       });
     } catch (error: unknown) {

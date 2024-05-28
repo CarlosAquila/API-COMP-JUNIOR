@@ -1,10 +1,13 @@
-interface RoleDTO {
+interface IRoleDTO {
     name: string;
-    description: string;
+    description?: string;
 }
 
-class RoleDTO {
-    constructor(data: RoleDTO) {
+class RoleDTO implements IRoleDTO{
+    name: string;
+    description?: string;
+
+    constructor(data: IRoleDTO) {
         this.name = this.validateName(data.name);
         this.description = this.validateDescription(data.description);
     }
@@ -16,7 +19,7 @@ class RoleDTO {
         return name;
     }
 
-    private validateDescription(description: string): string {
+    private validateDescription(description?: string): string | undefined{
         return description;
     }
 }

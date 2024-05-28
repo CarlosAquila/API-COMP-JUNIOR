@@ -1,13 +1,16 @@
-import e from "express";
-
-interface EmployeeDTO {
+interface IEmployeeDTO {
     name: string;
     cpf: string;
-    telephone: string;
-    address: string;
+    telephone?: string;
+    address?: string;
 }
 
-class EmployeeDTO {
+class EmployeeDTO implements IEmployeeDTO{
+    name: string;
+    cpf: string;
+    telephone?: string;
+    address?: string;
+
     constructor(data: EmployeeDTO) {
         this.name = this.validateName(data.name);
         this.cpf = this.validateCpf(data.cpf);
@@ -32,14 +35,14 @@ class EmployeeDTO {
         return cpf;
     }
 
-    private validateTelephone(telephone: string): string {
+    private validateTelephone(telephone?: string): string | undefined{
         if (telephone && telephone.length < 9) {
             throw new Error("Telephone must have at least 10 characters");
         }
         return telephone;
     }
 
-    private validateAddress(address: string): string {
+    private validateAddress(address?: string): string | undefined{
         return address;
     }
 }
