@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { BookController } from "../controllers/bookCrontroller";
 import { permissionMiddleware } from "../middlewares/accessControlMiddleware";
-import { authorRoutes } from "./author.routes";
 
 const bookController = new BookController();
 const bookRoutes = Router();
 
 bookRoutes.post("/", permissionMiddleware(["create book"]), bookController.createBook);
 
-authorRoutes.use(permissionMiddleware(["read book"]));
+bookRoutes.use(permissionMiddleware(["read book"]));
 
 bookRoutes.get("/", bookController.getBooks);
 bookRoutes.get("/:id", bookController.getBookById);

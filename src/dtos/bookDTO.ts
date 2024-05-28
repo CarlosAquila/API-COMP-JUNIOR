@@ -1,16 +1,24 @@
-import e from "express";
-
-interface BookDTO {
+interface IBookDTO {
     title: string;
-    description: string;
+    description?: string;
     isbn: string;
     year: number;
     publisherId: string;
     authors: string[];
     categories: string[];
+    loanTypeId: string;
 }
 
-class BookDTO {
+class BookDTO implements IBookDTO{
+    title: string;
+    description?: string;
+    isbn: string;
+    year: number;
+    publisherId: string;
+    authors: string[];
+    categories: string[];
+    loanTypeId: string;
+
     constructor(data: BookDTO) {
         this.title = this.validateTitle(data.title);
         this.description = this.validateDescription(data.description);
@@ -19,6 +27,7 @@ class BookDTO {
         this.publisherId = this.validatepublisherId(data.publisherId);
         this.authors = this.validateAuthors(data.authors);
         this.categories = this.validateCategories(data.categories);
+        this.loanTypeId = this.validateLoanType(data.loanTypeId);
     }
 
     private validateTitle(title: string): string {
@@ -28,7 +37,7 @@ class BookDTO {
         return title;
     }
 
-    private validateDescription(description: string): string {
+    private validateDescription(description?: string): string | undefined{
         return description;
     }
 
@@ -78,6 +87,13 @@ class BookDTO {
         throw new Error("Categories are required");
       }
       return categories;
+    }
+
+    private validateLoanType(loanType: string): string {
+      if (!loanType) {
+        throw new Error("Loan type is required");
+      }
+      return loanType;
     }
 }
 

@@ -1,10 +1,13 @@
-interface CategoryDTO {
+interface ICategoryDTO {
     name: string;
-    description: string;
+    description?: string;
 }
 
-class CategoryDTO {
-    constructor(data: CategoryDTO) {
+class CategoryDTO implements ICategoryDTO {
+  name: string;
+  description?: string;
+
+    constructor(data: ICategoryDTO) {
         this.name = this.validateName(data.name);
         this.description = this.validateDescription(data.description);
     }
@@ -16,7 +19,7 @@ class CategoryDTO {
         return name;
     }
 
-    private validateDescription(description: string): string {
+    private validateDescription(description?: string): string  | undefined {
         return description;
     }
 }

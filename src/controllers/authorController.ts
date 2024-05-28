@@ -2,14 +2,18 @@ import { Request, Response } from "express";
 import { AuthorService } from "../services/authorService";
 import AuthorDTO from "../dtos/authorDTO";
 
-const authorService = new AuthorService();
 
 export class AuthorController {
+  private authorService: AuthorService;
+
+  constructor(authorService: AuthorService) {
+    this.authorService = authorService;
+  }
 
   async createAuthor(req: Request, res: Response) {
     try {
       const authorData: AuthorDTO = new AuthorDTO(req.body);
-      const newAuthor = await authorService.createAuthor(authorData);
+      const newAuthor = await this.authorService.createAuthor(authorData);
       return res.status(201).json(newAuthor);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -21,7 +25,7 @@ export class AuthorController {
 
   async getAuthors(req: Request, res: Response) {
     try {
-      const authors = await authorService.getAuthors();
+      const authors = await this.authorService.getAuthors();
       if (!authors || (Array.isArray(authors) && authors.length === 0)) {
         return res.status(404).json({ error: "Authors not found" });
       }
@@ -37,7 +41,7 @@ export class AuthorController {
   async getAuthorById(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const author = await authorService.getAuthorById(id);
+      const author = await this.authorService.getAuthorById(id);
       if (!author) {
         return res.status(404).json({ error: "Author not found" });
       }
@@ -53,7 +57,7 @@ export class AuthorController {
   async getAuthorByName(req: Request, res: Response) {
     try {
       const { name } = req.params;
-      const author = await authorService.getAuthorByName(name);
+      const author = await this.authorService.getAuthorByName(name);
       if (!author || (Array.isArray(author) && author.length === 0)) {
         return res.status(404).json({ error: "Author not found" });
       }
@@ -70,7 +74,7 @@ export class AuthorController {
     try {
       const { id } = req.params;
       const authorData: AuthorDTO = new AuthorDTO(req.body);
-      const updatedAuthor = await authorService.updateAuthorById(id, authorData);
+      const updatedAuthor = await this.authorService.updateAuthorById(id, authorData);
       return res.status(200).json(updatedAuthor);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -83,7 +87,7 @@ export class AuthorController {
   async deleteAuthorById(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      await authorService.deleteAuthorById(id);
+      await this.authorService.deleteAuthorById(id);
       return res.status(204).send();
     } catch (error: unknown) {
       if (error instanceof Error) {

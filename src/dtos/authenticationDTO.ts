@@ -1,12 +1,15 @@
 import { ValidationUtils } from "../utils/validationUtils";
 
-interface AuthDTO {
+interface IAuthDTO {
     email: string;
     password: string;
 }
 
-class AuthDTO implements AuthDTO{
-    constructor(data: AuthDTO) {
+class AuthDTO implements IAuthDTO{
+  email: string;
+  password: string;
+
+    constructor(data: IAuthDTO) {
         this.email = ValidationUtils.validateEmail(data.email);
         this.password = ValidationUtils.validatePassword(data.password);
     }

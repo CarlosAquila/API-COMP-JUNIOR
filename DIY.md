@@ -49,3 +49,9 @@ npm run migrate
 npx prisma migrate deploy
 npx prisma db seed
 npx prisma generate
+
+npm i --save-dev jest
+npm i --save-dev ts-jest    
+npm i --save-dev @types/jest
+ npm install jest supertest    
+ npm i --save-dev @types/supertest
