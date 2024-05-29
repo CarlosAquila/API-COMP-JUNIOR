@@ -283,3 +283,47 @@ erDiagram
 
 - **LoanType**
   - Um tipo de empréstimo pode estar associado a múltiplos livros (Book).
+
+## Arquitetura e Organização do Código
+
+### Back-end
+
+- O projeto é um monolito, onde todos os componentes estão integrados em uma única aplicação.
+
+## Estrutura de Pastas
+
+### Explicação de Cada Pasta
+
+- **node_modules/**: Diretório padrão onde as dependências do Node.js são instaladas.
+- **prisma/**: Contém arquivos e configurações relacionados ao Prisma ORM.
+  - **dbml/**: Arquivos DBML (Database Markup Language) para definição de banco de dados.
+  - **migrations/**: Arquivos de migração gerados pelo Prisma.
+  - **schema.prisma**: Arquivo de schema do Prisma, definindo as entidades e relacionamentos do banco de dados.
+  - **seed.ts**: Script para popular o banco de dados com dados iniciais.
+- **src/**: Diretório principal do código fonte da aplicação.
+  - **__tests__/**: Contém os testes da aplicação.
+    - **integration/**: Testes de integração para verificar a interação entre diferentes partes do sistema.
+    - **unit/**: Testes unitários para verificar a funcionalidade isolada de componentes específicos.
+  - **controllers/**: Controladores responsáveis por lidar com as requisições HTTP e chamar os serviços apropriados e responder adequadamente o cliente.
+  - **dtos/**: Data Transfer Objects, usados para transferir dados entre diferentes camadas da aplicação. Os DTOs podem incluir validação e higienização dos dados para garantir a integridade e conformidade com os requisitos da aplicação..
+  - **middlewares/**: Funções intermediárias que processam requisições antes de chegarem aos controladores.
+    - **acessControlMiddleware.ts**: Middleware responsável por verificar se o usuário tem as permissões ou roles necessárias para acessar determinadas rotas. 
+      - `permissionMiddleware`: Verifica se o usuário tem as permissões necessárias diretamente ou através das roles atribuídas.
+      - `roleMiddleware`: Verifica se o usuário possui uma das roles necessárias para acessar a rota.
+    - **authenticationMiddleware.ts/**: Middleware que verifica a presença e a validade do token de autenticação. Se o token for válido, adiciona o `userId` ao objeto `Request`.
+    - **serverMiddleware.ts/**: Middleware que lida com erros globais na aplicação. Retorna uma mensagem de erro apropriada dependendo do tipo de erro encontrado.
+  - **models/**: Contém os modelos do Prisma que representam as entidades do banco de dados. Esses modelos também incluem a lógica para operações de CRUD (Create, Read, Update, Delete) e outras interações com o banco de dados.
+  - **routes/**: Contém as definições das rotas da aplicação, que são responsáveis por mapear URLs para métodos de controladores específicos. Cada arquivo `.routes.ts` define as rotas para uma entidade específica da aplicação (e.g., autores, usuários, livros).
+      - **index.ts/**: Centraliza e organiza todas as rotas da aplicação, definindo quais rotas estão acessíveis para cada entidade e aplicando middlewares de autenticação e controle de acesso.
+  - **services/**: Contém a lógica de negócio da aplicação, que é responsável por interagir com os modelos e aplicar as regras de negócio antes de retornar os dados ou chamar outros serviços..
+  - **utils/**: Funções auxiliares e utilitários reutilizáveis.
+  - **views/**: Views responsáveis por renderizar as respostas (se aplicável).
+  - **server.ts**: Arquivo principal do servidor, ponto de entrada da aplicação.
+- **.env**: Arquivo de variáveis de ambiente contendo configurações sensíveis, como credenciais de acesso.
+- **.gitignore**: Arquivo de configuração do Git para especificar arquivos e pastas a serem ignorados pelo controle de versão.
+- **jest.config.js**: Configurações do Jest, framework de testes.
+- **LICENSE**: Licença do projeto, especificando os termos sob os quais o código pode ser usado.
+- **package-lock.json**: Lockfile do npm, garantindo a consistência das versões das dependências instaladas.
+- **package.json**: Arquivo de configuração do npm, listando dependências e scripts da aplicação.
+- **README.md**: Documentação principal do projeto, contendo informações sobre instalação, uso e contribuição.
+- **tsconfig.json**: Configurações do TypeScript, definindo opções de compilação.
