@@ -412,6 +412,5 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICEN
 ## Contato
 Para mais informações, entre em contato:
 
-- [Email](carlosaquila.dev@gmail.com)
 - [Linkedin](https://www.linkedin.com/in/carlos-%C3%A1quila/)
 
