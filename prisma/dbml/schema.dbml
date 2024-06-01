@@ -1,0 +1,155 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table users {
+  id String [pk]
+  email String [unique, not null]
+  name String
+  address String
+  password String [not null]
+  loans loans [not null]
+  roles roles [not null]
+  permissions permissions [not null]
+  visible Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+}
+
+Table permissions {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  roles roles [not null]
+  users users [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table roles {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  permissions permissions [not null]
+  users users [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table authors {
+  id String [pk]
+  name String [unique, not null]
+  biography String
+  books books [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table publishers {
+  id String [pk]
+  name String [unique, not null]
+  address String
+  books books [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table categories {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  books books [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table employees {
+  id String [pk]
+  name String [not null]
+  cpf String [unique, not null]
+  telephone String
+  address String
+  loans loans [not null]
+  visible Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+}
+
+Table books {
+  id String [pk]
+  title String [not null]
+  description String
+  isbn String [unique, not null]
+  year Int [not null]
+  publisherId String [not null]
+  publisher publishers [not null]
+  loanTypeId String [not null]
+  loanType loanTypes [not null]
+  authors authors [not null]
+  categories categories [not null]
+  loans loans [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table loans {
+  id String [pk]
+  loanDate DateTime [default: `now()`, not null]
+  dueDate DateTime [not null]
+  returnDate DateTime
+  fees Float [not null, default: 0]
+  returned Boolean [not null, default: false]
+  condition String
+  paymethod String
+  userId String [not null]
+  user users [not null]
+  bookId String [not null]
+  book books [not null]
+  employeeId String [not null]
+  employee employees [not null]
+  visible Boolean [not null, default: true]
+}
+
+Table loanTypes {
+  id String [pk]
+  name String [unique, not null]
+  fine Float [not null]
+  day Int [not null]
+  description String
+  books books [not null]
+  createdAt DateTime [default: `now()`, not null]
+  visible Boolean [not null, default: true]
+}
+
+Table RoleToUser {
+  rolesId String [ref: > roles.id]
+  usersId String [ref: > users.id]
+}
+
+Table PermissionToUser {
+  permissionsId String [ref: > permissions.id]
+  usersId String [ref: > users.id]
+}
+
+Table PermissionToRole {
+  rolesId String [ref: > roles.id]
+  permissionsId String [ref: > permissions.id]
+}
+
+Table AuthorToBook {
+  booksId String [ref: > books.id]
+  authorsId String [ref: > authors.id]
+}
+
+Table BookToCategory {
+  booksId String [ref: > books.id]
+  categoriesId String [ref: > categories.id]
+}
+
+Ref: books.publisherId > publishers.id
+
+Ref: books.loanTypeId > loanTypes.id
+
+Ref: loans.userId > users.id
+
+Ref: loans.bookId > books.id
+
+Ref: loans.employeeId > employees.id

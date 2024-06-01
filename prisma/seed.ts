@@ -52,7 +52,7 @@ async function main() {
   }
 
   // Assign read permissions to basic user role
-  const basicUserPermissions = ['author', 'publisher', 'category'].map(async model => {
+  const basicUserPermissions = ['author', 'publisher', 'category', 'books'].map(async model => {
     const permission = await prisma.permission.findUnique({ where: { name: `read ${model}` } });
     if (permission) {
       await prisma.role.update({
@@ -65,7 +65,7 @@ async function main() {
   });
 
   // Assign create, read, update permissions to librarian role
-  const librarianPermissions = ['author', 'publisher', 'category'].flatMap(async model => {
+  const librarianPermissions = ['author', 'publisher', 'category', 'books'].flatMap(async model => {
     const readPermission = await prisma.permission.findUnique({ where: { name: `read ${model}` } });
     const createPermission = await prisma.permission.findUnique({ where: { name: `create ${model}` } });
     const updatePermission = await prisma.permission.findUnique({ where: { name: `update ${model}` } });

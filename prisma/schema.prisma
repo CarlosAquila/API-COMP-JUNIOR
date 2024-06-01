@@ -8,6 +8,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -52,6 +56,7 @@ model Role {
   @@map("roles")
 }
 
+// Um autor pode ter no minimo um livro e no maximo varios livros
 model Author {
   id            String   @id @default(uuid())
   name          String   @unique
@@ -98,6 +103,7 @@ model Employee {
   @@map("employees")
 }
 
+// Um livro pode ter vários autores e um autor pode ter vários livros
 model Book {
   id            String   @id @default(uuid())
   title         String
