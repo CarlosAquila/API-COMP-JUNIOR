@@ -55,3 +55,4 @@ npm i --save-dev ts-jest
 npm i --save-dev @types/jest
  npm install jest supertest    
  npm i --save-dev @types/supertest
+ npm install -D prisma-dbml-generator   
