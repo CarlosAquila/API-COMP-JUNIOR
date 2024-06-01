@@ -5,8 +5,7 @@
 - [Tecnologias Utilizadas](#descrição)
 - [Modelagem de Dados](#descrição)
 - [Arquitetura e Organização de Código](#descrição)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
+- [Instalação e Configuração](#instalação)
 - [Uso](#uso)
 - [Testes](#testes)
 - [Contribuição](#contribuição)
@@ -316,14 +315,105 @@ erDiagram
   - **routes/**: Contém as definições das rotas da aplicação, que são responsáveis por mapear URLs para métodos de controladores específicos. Cada arquivo `.routes.ts` define as rotas para uma entidade específica da aplicação (e.g., autores, usuários, livros).
       - **index.ts/**: Centraliza e organiza todas as rotas da aplicação, definindo quais rotas estão acessíveis para cada entidade e aplicando middlewares de autenticação e controle de acesso.
   - **services/**: Contém a lógica de negócio da aplicação, que é responsável por interagir com os modelos e aplicar as regras de negócio antes de retornar os dados ou chamar outros serviços..
-  - **utils/**: Funções auxiliares e utilitários reutilizáveis.
+  - **utils/**: Contém funções utilitárias que são usadas em várias partes da aplicação. Essas funções encapsulam funcionalidades comuns e reutilizáveis, como criptografia, envio de e-mails e validação de dados.
+    - **crypt.ts/**: Arquivo responsável por funções de criptografia e descriptografia de dados.
+      - `encrypt`: Função que criptografa um texto usando o algoritmo AES-256-CBC e retorna o texto criptografado junto com o IV (vetor de inicialização) em formato hexadecimal.
+      - `decrypt`: Função que descriptografa um texto criptografado, separando o IV e o texto criptografado, e retornando o texto original.
+    - **emailService.ts/**: Arquivo responsável pelo envio de e-mails utilizando o serviço Nodemailer.
+      - `decrypt`: Função que envia um e-mail utilizando o Nodemailer com autenticação OAuth2. Recebe como parâmetros o destinatário (to), o assunto (subject) e o conteúdo do e-mail em HTML (html).
+    - **validationUtils.ts/**: Arquivo responsável pela validação de dados, como e-mails e senhas.
   - **views/**: Views responsáveis por renderizar as respostas (se aplicável).
   - **server.ts**: Arquivo principal do servidor, ponto de entrada da aplicação.
 - **.env**: Arquivo de variáveis de ambiente contendo configurações sensíveis, como credenciais de acesso.
-- **.gitignore**: Arquivo de configuração do Git para especificar arquivos e pastas a serem ignorados pelo controle de versão.
 - **jest.config.js**: Configurações do Jest, framework de testes.
-- **LICENSE**: Licença do projeto, especificando os termos sob os quais o código pode ser usado.
-- **package-lock.json**: Lockfile do npm, garantindo a consistência das versões das dependências instaladas.
-- **package.json**: Arquivo de configuração do npm, listando dependências e scripts da aplicação.
-- **README.md**: Documentação principal do projeto, contendo informações sobre instalação, uso e contribuição.
 - **tsconfig.json**: Configurações do TypeScript, definindo opções de compilação.
+
+## Instalação e Configuração
+
+### Requisitos
+
+- Node.js v14 ou superior
+- NPM ou Yarn
+- MySQL
+
+### Passos para Instalação
+1. Clone o repositório:
+```sh
+  git clone https://github.com/Piernita/API-COMP-JUNIOR.git
+```
+2. Instale as dependências:
+```sh
+  cd API-COMP-JUNIOR
+  npm install
+```
+
+3. Configure o banco de dados MySQL e crie um arquivo `.env` baseado no `.env.example`:
+```sh
+  cp .env.example .env
+```
+
+4. Execute as migrations do Prisma que irá criar e popular o banco:
+```sh
+  npx prisma migrate dev
+```
+### Configuração
+
+No arquivo `.env`, configure as seguintes variáveis:
+```sh
+DATABASE_URL="mysql://root:senha@localhost:3306/compJunior"
+JWT_SECRET="sua_chave_secreta"
+JWT_EXPIRATION_TIME="1h"
+SECRET_KEY="sua_chave_secreta"
+SMTP_USER="seu_email@compjunior.com.br"
+SMTP_PASSWORD="sua_senha"
+SMTP_CLIENT_ID="seu_client_id.apps.googleusercontent.com"
+SMTP_CLIENT_SECRET="seu_client_secret"
+SMTP_REFRESH_TOKEN="seu_refresh_token"
+SMTP_FROM="seu_email@gmail.com.br"
+```
+
+## Uso
+
+Para iniciar o servidor de desenvolvimento, utilize o seguinte comando:
+
+```sh
+npm run dev
+```
+A API estará disponível em `http://localhost:3000`.
+
+### Endpoints Principais
+- `POST /api/auth/register`: Registro de usuário
+- `POST /api/auth/login`: Login de usuário
+- `GET /api/books`: Listagem de livros
+- `POST /api/loans`: Criação de um novo empréstimo
+
+## Testes
+
+### Executar Testes Unitários
+
+Para rodar os testes unitários, use:
+```sh
+npm run test
+```
+
+## Contribuição
+
+Contribuições são bem-vindas! Siga os passos abaixo:
+
+1. Fork o repositório
+2. Crie uma nova branch (`git checkout -b feature/nova-funcionalidade`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Crie um novo Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Autores
+
+- **Perninha** - *Desenvolvimento inicial* - [Perfil do GitHub](https://github.com/Piernita)
+
+## Contato
+Para dúvidas ou suporte, entre em contato pelo email carlosaquila.dev@gmail.com.
+
