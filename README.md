@@ -2,20 +2,19 @@
 
 ## Índice
 - [Descrição do Projeto](#descrição)
-- [Tecnologias Utilizadas](#descrição)
-- [Modelagem de Dados](#descrição)
-- [Arquitetura e Organização de Código](#descrição)
-- [Instalação e Configuração](#instalação)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas-)
+- [Modelagem de Dados](#modelagem-de-dados)
+- [Arquitetura e Organização de Código](#arquitetura-e-organização-do-código)
+- [Instalação e Configuração](#instalação-e-configuração)
 - [Uso](#uso)
 - [Testes](#testes)
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 - [Autores](#autores)
 - [Contato](#contato)
-- [Changelog](#changelog)
 
 ## Descrição
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus a nisl vel blandit. Sed ut lorem pulvinar, fermentum ante ac, tempor ex. Pellentesque rhoncus vestibulum est, sit amet porttitor massa pretium quis. Aenean hendrerit, justo sed lobortis hendrerit, magna mi egestas leo, eget maximus magna lorem eget felis. Nam aliquet tortor eget augue sagittis, semper dapibus urna tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer nibh elit, mattis in tellus ut, varius viverra enim. Nam aliquam nulla vel urna hendrerit euismod. Nam erat turpis, dignissim at tincidunt rutrum, vulputate at turpis. Mauris nec pellentesque mauris. Ut magna ante, mollis vestibulum fermentum id, fringilla in neque.
+Este projeto foi desenvolvido como parte de um desafio para demonstrar habilidades no desenvolvimento back-end. A API criada visa gerenciar uma biblioteca, permitindo a administração de livros, autores, categorias e empréstimos. Utilizando tecnologias modernas e práticas de desenvolvimento, o projeto cumpre todos os requisitos essenciais e implementa funcionalidades avançadas para proporcionar uma experiência completa e robusta.
 
 ## Tecnologias Utilizadas 🚀
 
@@ -37,11 +36,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus a nis
 
 - **nodemailer**: Biblioteca para envio de e-mails em aplicações Node.js.
 
-- **prisma-dbml-generator**: Biblioteca para envio de e-mails em aplicações Node.js.
-
-- **Git**: Framework de testes em JavaScript.
-
-- **GitHub**: Framework de testes em JavaScript.
+- **prisma-dbml-generator**: Ferramenta que gera diagramas de entidade-relacionamento (ERD) a partir do esquema Prisma, permitindo uma visualização clara e compreensível da modelagem do banco de dados.
 
 ## Modelagem de Dados
 
@@ -415,5 +410,8 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICEN
 - **Perninha** - *Desenvolvimento inicial* - [Perfil do GitHub](https://github.com/Piernita)
 
 ## Contato
-Para dúvidas ou suporte, entre em contato pelo email carlosaquila.dev@gmail.com.
+Para mais informações, entre em contato:
+
+- [Email](carlosaquila.dev@gmail.com)
+- [Linkedin](https://www.linkedin.com/in/carlos-%C3%A1quila/)
 
