@@ -30,6 +30,7 @@ routes.use("/books", bookRoutes);
 routes.use(roleMiddleware(["librarian", "admin"]));
 
 routes.use("/loans", loanRoutes);
+routes.use("/employees", employeeRoutes);
 
 routes.use(roleMiddleware(["admin"]));
 
